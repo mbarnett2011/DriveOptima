@@ -1,0 +1,5 @@
+{
+  "name": "DriveOptima - AI Storage Architect",
+  "description": "An intelligent Google Drive organizer that analyzes file contents, dates, and subject matter to recommend folder consolidation, file renaming, and logical remapping.",
+  "requestFramePermissions": []
+}
