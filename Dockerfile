@@ -20,6 +20,9 @@ ENV API_KEY=$API_KEY
 # Note environment variables must be passed at build time or runtime. 
 # For Vite, variables prefixed with VITE_ are embedded at build time.
 # However, we'll setup the Nginx stage to potentially serve this.
+# Build the project
+# Increase memory limit for build process
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
 
 # Stage 2: Serve
