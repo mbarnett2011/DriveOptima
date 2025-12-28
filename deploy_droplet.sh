@@ -13,8 +13,18 @@ git pull origin $BRANCH
 
 # 2. Build Docker Image
 echo "🏗️  Building Docker Image..."
-# We pass --no-cache to ensure fresh build if needed, though layers cache is usually good.
-docker build -t $APP_NAME .
+
+# Check for API_KEY if available (optional for script safety, but good practice)
+if [ -f .env.local ]; then
+    echo "Using .env.local for secrets..."
+    export $(grep -v '^#' .env.local | xargs)
+elif [ -f .env ]; then
+    echo "Using .env for secrets..."
+    export $(grep -v '^#' .env | xargs)
+fi
+
+# We build and pass API_KEY
+docker build --build-arg API_KEY="$API_KEY" -t $APP_NAME .
 
 # 3. Stop and remove existing container
 echo "🛑 Stopping existing container..."
@@ -23,12 +33,10 @@ docker rm $APP_NAME || true
 
 # 4. Run new container
 echo "🏃 Running new container..."
-# NOTE: We assume API_KEY is set in the environment or passed via .env file
-# To pass explicit key: -e API_KEY=your_key
-# Or use --env-file .env
 docker run -d \
   --name $APP_NAME \
   --restart unless-stopped \
+  -e API_KEY="$API_KEY" \
   -p 80:80 \
   $APP_NAME
 

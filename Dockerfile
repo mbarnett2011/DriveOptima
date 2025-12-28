@@ -12,6 +12,10 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Pass API_KEY at build time
+ARG API_KEY
+ENV API_KEY=$API_KEY
+
 # Build the project
 # Note environment variables must be passed at build time or runtime. 
 # For Vite, variables prefixed with VITE_ are embedded at build time.
