@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:20-alpine as build
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
@@ -12,9 +12,11 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Pass API_KEY at build time
+# API keys should be passed at build time via:
+#   docker build --build-arg API_KEY=your_key .
+# Do NOT hardcode sensitive values in the Dockerfile.
+# Using ARG only (not ENV) ensures the key is not persisted in image layers.
 ARG API_KEY
-ENV API_KEY=$API_KEY
 
 # Build the project
 # Note environment variables must be passed at build time or runtime. 
