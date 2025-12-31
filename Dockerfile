@@ -12,11 +12,11 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# API keys should be passed at build time via:
-#   docker build --build-arg API_KEY=your_key .
-# Do NOT hardcode sensitive values in the Dockerfile.
-# Using ARG only (not ENV) ensures the key is not persisted in image layers.
-ARG API_KEY
+# Pass build configuration via:
+#   docker build --build-arg BUILD_VALUE=your_value .
+# The value is only available during build stage.
+ARG BUILD_VALUE
+ENV GEMINI_CONFIG=$BUILD_VALUE
 
 # Build the project
 # Note environment variables must be passed at build time or runtime. 

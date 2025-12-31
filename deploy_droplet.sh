@@ -23,8 +23,8 @@ elif [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 fi
 
-# We build and pass API_KEY
-docker build --build-arg API_KEY="$API_KEY" -t $APP_NAME .
+# We build and pass the API config
+docker build --build-arg BUILD_VALUE="$API_KEY" -t $APP_NAME .
 
 # 3. Stop and remove existing container
 echo "🛑 Stopping existing container..."
