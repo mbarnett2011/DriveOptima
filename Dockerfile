@@ -24,7 +24,7 @@ ENV GEMINI_CONFIG=$BUILD_VALUE
 # However, we'll setup the Nginx stage to potentially serve this.
 # Build the project
 # Increase memory limit for build process
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=1024"
 RUN npm run build
 
 # Stage 2: Serve
